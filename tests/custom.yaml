@@ -1,0 +1,17 @@
+---
+tests_custom:
+  compound_custom:
+    n: 3
+    points:
+      - x: 1
+        y: 2
+      - x: 3
+        y: 4
+      - x: 5
+        y: 6
+  f: "fib"
+  hellostr: "Hello World!"
+  initial_state: "INIT"
+  my_ptr: 4660
+  running: "RUNNING"
+...

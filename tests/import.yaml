@@ -1,0 +1,6 @@
+---
+tests_import:
+  imported_lib:
+    parameter_from_imported_lib: 21
+  imported_parameter: 42
+...

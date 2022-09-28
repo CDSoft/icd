@@ -1,0 +1,54 @@
+.. |TESTS_SCALAR_A| replace:: 9223372036854775807
+
+.. |TESTS_SCALAR_B| replace:: -9223372036854775808
+
+.. |TESTS_SCALAR_B1| replace:: -9223372036854775807
+
+.. |TESTS_SCALAR_B2| replace:: -9223372036854775806
+
+.. |TESTS_SCALAR_B3| replace:: -9223372036854775805
+
+.. |TESTS_SCALAR_B4| replace:: -9223372036854775804
+
+.. |TESTS_SCALAR_BOOLEAN_F| replace:: false
+
+.. |TESTS_SCALAR_BOOLEAN_T| replace:: true
+
+.. |TESTS_SCALAR_FLOATS_F1| replace:: 0.0
+
+.. |TESTS_SCALAR_FLOATS_F2| replace:: 1.0
+
+.. |TESTS_SCALAR_FLOATS_F3| replace:: 3.1
+
+.. |TESTS_SCALAR_FLOATS_F4| replace:: 3.1415926535898
+
+.. |TESTS_SCALAR_NEG_A| replace:: -128
+
+.. |TESTS_SCALAR_NEG_B| replace:: -32768
+
+.. |TESTS_SCALAR_NEG_C| replace:: -2147483648
+
+.. |TESTS_SCALAR_NEG_D| replace:: -9223372036854775808
+
+.. |TESTS_SCALAR_POS_A| replace:: 0
+
+.. |TESTS_SCALAR_POS_B| replace:: 128
+
+.. |TESTS_SCALAR_POS_C| replace:: 256
+
+.. |TESTS_SCALAR_POS_D| replace:: 32768
+
+.. |TESTS_SCALAR_POS_E| replace:: 65536
+
+.. |TESTS_SCALAR_POS_F| replace:: 2147483648
+
+.. |TESTS_SCALAR_POS_G| replace:: 4294967296
+
+.. |TESTS_SCALAR_POS_H| replace:: 8589934592
+
+.. |TESTS_SCALAR_STRINGS_S1| replace:: 
+
+.. |TESTS_SCALAR_STRINGS_S2| replace:: hello
+
+.. |TESTS_SCALAR_STRINGS_S3| replace:: hello world!
+

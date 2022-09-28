@@ -1,0 +1,3 @@
+return {
+    PARAMETER_FROM_IMPORTED_LIB = 21,
+}
