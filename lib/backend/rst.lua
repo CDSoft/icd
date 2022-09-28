@@ -18,7 +18,6 @@ local function gen_rst(ast, namespace)
 end
 
 gen_const = function(x, t)
-    path = path or {}
     if t.kind == "uint" then return tostring(x) end
     if t.kind == "int" then return tostring(x) end
     if t.kind == "bool" then return tostring(x) end

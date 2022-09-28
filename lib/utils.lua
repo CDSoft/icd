@@ -136,4 +136,17 @@ function utils.file_exists(path)
     end
 end
 
+local protected_environment = {
+    __index = function(_, name)
+        error(name..": undefined identifier")
+    end,
+    __newindex = function(_, name)
+        error(name..": can not create new variables")
+    end,
+}
+
+function utils.protect(env)
+    return setmetatable(env, protected_environment)
+end
+
 return utils

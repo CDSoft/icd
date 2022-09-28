@@ -22,6 +22,9 @@ local icdpath = arg[0]:gsub("/[^/]*$", "")
 local icdlib = icdpath.."/lib"
 package.path = icdlib.."/?.lua;"..package.path
 
+local utils = require "utils"
+utils.protect(_G) -- protection against some side effects in _G
+
 -- Command line arguments
 
 local input = nil
@@ -85,8 +88,6 @@ print("input:", input)
 
 -- Execute the configuration script
 
--- TODO : protéger _G contre les modifications (ou au moins la création de nouvelles variables)
--- ou vérifier l'état de _G avant et après exécution du script
 local configuration = assert(require(input:gsub("%.lua$", "")))
 
 -- Add type annotations for the backends
