@@ -105,7 +105,12 @@ for _, backend in ipairs(backends) do
         local filename = output:gsub("%.[^%.]+$", "").."."..ext
         table.insert(outputs, filename)
         print("output:", filename)
-        io.open(filename, "w"):write(code)
+        local f = assert(io.open(filename, "w"))
+        assert(f:write(code))
+        f:close()
+        if filename:match("%.[ch]$") then
+            os.execute("clang-format -i -style=Microsoft "..filename)
+        end
     end
 end
 

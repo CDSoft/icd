@@ -1,15 +1,24 @@
 #pragma once
 #include <stdbool.h>
 #include <stdint.h>
-enum t_state { INIT, RUNNING, DEAD };
+enum t_state
+{
+    INIT,
+    RUNNING,
+    DEAD
+};
 int fib(int x);
-struct t_compount_custom_type {
+
+struct t_compount_custom_type
+{
     int n;
-    struct {
+    struct
+    {
         double x;
         double y;
     } points[10];
 };
+
 #define TESTS_CUSTOM_COMPOUND_CUSTOM_N (3)
 #define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_X (1)
 #define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_Y (2)
@@ -20,7 +29,7 @@ struct t_compount_custom_type {
 #define TESTS_CUSTOM_F (fib)
 #define TESTS_CUSTOM_HELLOSTR ("Hello World!")
 #define TESTS_CUSTOM_INITIAL_STATE (INIT)
-#define TESTS_CUSTOM_MY_PTR ((void*)0x00001234)
+#define TESTS_CUSTOM_MY_PTR ((void *)0x00001234)
 #define TESTS_CUSTOM_RUNNING (RUNNING)
 struct t_tests_custom
 {

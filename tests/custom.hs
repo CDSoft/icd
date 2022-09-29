@@ -1,6 +1,7 @@
 module Custom
 where
 data State = INIT | RUNNING | DEAD
+
 data TestsCustomCompoundCustomPoints = TestsCustomCompoundCustomPoints
     { compoundCustomPointsX' :: Integer
     , compoundCustomPointsY' :: Integer
