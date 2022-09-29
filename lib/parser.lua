@@ -185,6 +185,22 @@ function parser.compile(ast)
     return ast
 end
 
+function parser.prelude(ast, backend)
+    if type(ast) == "table" then
+        local prelude = {}
+        if ast.__prelude and type(ast.__prelude) == "table" and ast.__prelude[backend] then
+            table.insert(prelude, ast.__prelude[backend])
+        end
+        for k, v in utils.pairs(ast) do
+            local k_prelude = parser.prelude(v, backend)
+            if k_prelude then table.insert(prelude, k_prelude) end
+        end
+        if #prelude > 0 then
+            return table.concat(prelude, "\n").."\n"
+        end
+    end
+end
+
 function parser.leaves(x, f, path, t)
     path = path or setmetatable({}, pathmt)
     if type(x) == "table" and x.__type.kind == "array" then

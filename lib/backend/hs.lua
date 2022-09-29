@@ -1,6 +1,7 @@
 local backend = {}
 
 local utils = require "utils"
+local parser = require "parser"
 
 local gen_type, gen_struct_type, gen_array_type, gen_custom_type
 
@@ -55,7 +56,7 @@ local function gen_types(output, ast, namespace)
     local module_name = utils.upper_camel_case(utils.basename(output):gsub("%..*$", ""))
     local const_name = utils.lower_camel_case(namespace)
     local s = "module "..module_name.."\nwhere\n"
-    s = s .. (ast.__prelude and ast.__prelude.hs or "")
+    s = s .. (parser.prelude(ast, "hs") or "")
     local main_type = (gen_type(ast.__type, namespace):format(const_name))
     for i = 1, #structs do
         s = s .. structs[i][2]

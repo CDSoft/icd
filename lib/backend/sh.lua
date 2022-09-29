@@ -7,7 +7,7 @@ local gen_const, gen_custom
 
 local function gen_sh(ast, namespace)
     local s = "#!/bin/sh\n"
-    s = s .. table.concat(ast.__prelude and ast.__prelude.sh or {}, "\n")
+    s = s .. (parser.prelude(ast, "sh") or "")
     parser.leaves(ast, function(path, x, t)
         local name = utils.upper_snake_case(namespace, path)
         local val = gen_const(x, t, path)

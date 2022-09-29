@@ -1,6 +1,7 @@
 local backend = {}
 
 local utils = require "utils"
+local parser = require "parser"
 
 local gen_type, gen_struct_type, gen_array_type, gen_custom_type
 
@@ -54,7 +55,7 @@ end
 
 local function gen_types(ast, namespace)
     local const_name = utils.lower_snake_case(namespace)
-    local s = table.concat(ast.__prelude and ast.__prelude.asy or {}, "\n")
+    local s = parser.prelude(ast, "asy") or ""
     local main_type = (gen_type(ast.__type, namespace):format(const_name))
     for i = 1, #structs do
         s = s .. structs[i][2]

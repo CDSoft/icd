@@ -6,7 +6,7 @@ local utils = require "utils"
 local gen_const, gen_custom
 
 local function gen_rst(ast, namespace)
-    local s = table.concat(ast.__prelude and ast.__prelude.rst or {}, "\n")
+    local s = parser.prelude(ast, "rst") or ""
     parser.leaves(ast, function(path, x, t)
         local name = utils.upper_snake_case(namespace, path)
         local val = gen_const(x, t)

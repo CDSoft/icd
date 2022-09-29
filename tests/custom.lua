@@ -2,13 +2,6 @@ local prelude = {
     c = [[
 enum t_state { INIT, RUNNING, DEAD };
 int fib(int x);
-struct t_compount_custom_type {
-    int n;
-    struct {
-        double x;
-        double y;
-    } points[10];
-};
 ]],
     hs = [[
 data State = INIT | RUNNING | DEAD
@@ -50,6 +43,15 @@ return {
     f = {__custom=func, "fib"},
     hellostr = {__custom=say_hello, "World!"},
     compound_custom = {__ctype = "struct t_compount_custom_type",
+        __prelude = { c = [[
+            struct t_compount_custom_type {
+                int n;
+                struct {
+                    double x;
+                    double y;
+                } points[10];
+            };
+        ]]},
         n = 3,
         points = { {x=1, y=2}, {x=3, y=4}, {x=5, y=6} },
     },

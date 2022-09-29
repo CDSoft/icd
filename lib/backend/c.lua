@@ -65,7 +65,7 @@ local function gen_h(ast, namespace, params)
     local s = "#pragma once\n"
     s = s .. "#include <stdbool.h>\n"
     s = s .. "#include <stdint.h>\n"
-    s = s .. (ast.__prelude and ast.__prelude.c or "")
+    s = s .. (parser.prelude(ast, "c") or "")
     if params.cpp_const then
         parser.leaves(ast, function(path, x, t)
             local name = utils.upper_snake_case(namespace, path)
@@ -137,7 +137,6 @@ end
 gen_const = function(x, t, namespace, path, indent)
     path = path or {}
     indent = indent or ""
-    --if type(x) == "table" and x.__ctype then return gen_cvalue(x[1], indent) end
     if t.kind == "struct" then return gen_struct(x, t, namespace, path, indent) end
     if t.kind == "array" then return gen_array(x, t, namespace, path, indent) end
     if t.kind == "uint" then return uinttostring(x, t.size) end
@@ -155,37 +154,6 @@ gen_custom = function(x, t)
         return (defs.v or "%s"):format(x[1])
     end
 end
-
---[[
-gen_cvalue = function(x, indent)
-    local s = ""
-    if type(x) == "table" then
-        s = s.."{\n"
-        for k, v in utils.pairs(x) do
-            s = s..indent.."    "
-            if type(k) == "number" and math.type(k) == "integer" then
-                s = s..(("[%d] = "):format(k))
-            else
-                s = s..((".%s = "):format(k))
-            end
-            s = s..gen_const(v, indent.."    ")..",\n"
-        end
-        s = s..indent.."}"
-    else
-        return ("%q"):format(
-    end
-    return s
-end
---]]
-
---[[
-gen_ctype = function(x, t)
-    local ctype = t.ctype
-    if ctype then
-        return ("%s %s"):format(ctype, x[1])
-    end
-end
---]]
 
 gen_struct = function(x, t, namespace, path, indent)
     local multiline = multiline_struct(path, x, t)
