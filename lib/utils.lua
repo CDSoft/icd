@@ -138,15 +138,45 @@ end
 
 local protected_environment = {
     __index = function(_, name)
-        error(name..": undefined identifier")
+        error(name..": undefined identifier", 2)
     end,
     __newindex = function(_, name)
-        error(name..": can not create new variables")
+        error(name..": can not create new variables", 2)
     end,
 }
 
+local protected_table = {
+    __newindex = function(_, name)
+        error(name..": can not create new variables", 2)
+    end,
+}
+
+local function protect(t)
+    if type(t) == "table" then
+        if getmetatable(t) == nil then setmetatable(t, protected_table) end
+        for _, v in pairs(t) do
+            if type(v) == "table" and getmetatable(v) == nil then protect(v) end
+        end
+    end
+    return t
+end
+
 function utils.protect(env)
     return setmetatable(env, protected_environment)
+end
+
+local lua_require = require
+
+local function protected_require(name)
+    local protected = require ~= lua_require
+    if not protected then require = protected_require end
+    local t = protect(lua_require(name))
+    if not protected then require = lua_require end
+    return t
+end
+
+function utils.require(name)
+    return protected_require(name)
 end
 
 return utils

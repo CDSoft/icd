@@ -88,7 +88,7 @@ print("input:", input)
 
 -- Execute the configuration script
 
-local configuration = assert(require(input:gsub("%.lua$", "")))
+local configuration = assert(utils.require(input:gsub("%.lua$", "")))
 
 -- Add type annotations for the backends
 

@@ -75,11 +75,11 @@ local function build_custom(x)
     -- A custom typed value is defined in pure Lua script as {__custom=custom_type_def, value}
     -- build_custom adds a type definition in x.__type (as for other builtin types)
     if type(x) == "table" and type(x.__custom) == "table" then
-        x.__type = merge(x.__type, { kind = "custom", definitions = x.__custom })
+        rawset(x, "__type", merge(x.__type, { kind = "custom", definitions = x.__custom }))
         x.__custom = true
     end
     if type(x) == "table" and type(x.__ctype) == "string" then
-        x.__type = merge(x.__type, { ctype = x.__ctype })
+        rawset(x, "__type", merge(x.__type, { ctype = x.__ctype }))
     end
 end
 
@@ -152,7 +152,7 @@ end
 add_array_type = function(x, path, dim)
     -- all items have the same type
     dim = (dim or 0) + 1
-    x.__type = merge(x.__type, {kind="array", size=#x, itemtype=nil, dim=dim})
+    rawset(x, "__type", merge(x.__type, {kind="array", size=#x, itemtype=nil, dim=dim}))
     for i, v in ipairs(x) do
         local path2 = add_path(path, i)
         local itemtype = add_types(v, path2, dim)
@@ -169,7 +169,7 @@ end
 
 add_struct_type = function(x, path)
     -- each field has its own type
-    x.__type = merge(x.__type, {kind="struct", fields={}})
+    rawset(x, "__type", merge(x.__type, {kind="struct", fields={}}))
     for k, v in pairs(x) do
         if filter(k, v) then
             local path2 = add_path(path, k)
