@@ -1,7 +1,8 @@
 module Import
 where
 data TestsImportImportedLib = TestsImportImportedLib
-    { importedLibParameterFromImportedLib' :: Integer
+    { importedLibArrayFromImportedLib' :: [String]
+    , importedLibParameterFromImportedLib' :: Integer
     }
 data TestsImport = TestsImport
     { importedLib' :: TestsImportImportedLib
@@ -9,6 +10,9 @@ data TestsImport = TestsImport
     }
 testsImport :: TestsImport
 testsImport = TestsImport
-    { importedLib' = TestsImportImportedLib {importedLibParameterFromImportedLib' = 21}
+    { importedLib' = TestsImportImportedLib
+        { importedLibArrayFromImportedLib' = ["a", "b"]
+        , importedLibParameterFromImportedLib' = 21
+        }
     , importedParameter' = 42
     }

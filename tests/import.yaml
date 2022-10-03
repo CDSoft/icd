@@ -1,6 +1,9 @@
 ---
 tests_import:
   imported_lib:
+    array_from_imported_lib:
+      - "a"
+      - "b"
     parameter_from_imported_lib: 21
   imported_parameter: 42
 ...

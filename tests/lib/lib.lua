@@ -1,3 +1,4 @@
 return {
     PARAMETER_FROM_IMPORTED_LIB = 21,
+    ARRAY_FROM_IMPORTED_LIB = {"a", "b"},
 }
