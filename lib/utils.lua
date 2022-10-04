@@ -196,10 +196,28 @@ local function deep_copy(t)
     return t2
 end
 
+local function check_name_uniqueness(table_name, t)
+    if type(t) ~= "table" then return end
+    local simplified_names = {}
+    for k, _ in pairs(t) do
+        if type(k) == "string" then
+            local simplified_name = k:gsub("_", ""):lower()
+            simplified_names[simplified_name] = simplified_names[simplified_name] or {}
+            table.insert(simplified_names[simplified_name], k)
+        end
+    end
+    for _, actual_names in pairs(simplified_names) do
+        if #actual_names > 1 then
+            error(("Ambiguous names in %s: %s"):format(table_name, table.concat(actual_names, ", ")), 0)
+        end
+    end
+end
+
 local function protected_require(name)
     local protected = require ~= lua_require
     if not protected then require = protected_require end
     local t = protect(assert(lua_require(name)))
+    check_name_uniqueness(name, t)
     modules[name] = modules[name] or deep_copy(t)
     if not protected then require = lua_require end
     return t
