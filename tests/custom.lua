@@ -44,12 +44,14 @@ return {
     hellostr = {__custom=say_hello, "World!"},
     compound_custom = {__ctype = "struct t_compount_custom_type",
         __prelude = { c = [[
+            #include <stdlib.h>
+            #define MAX_POINTS 10
             struct t_compount_custom_type {
-                int n;
+                size_t n;
                 struct {
                     double x;
                     double y;
-                } points[10];
+                } points[MAX_POINTS];
             };
         ]]},
         n = 3,

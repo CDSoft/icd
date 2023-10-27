@@ -1,0 +1,1 @@
+.build/test-luax/scalar.c .build/test-luax/scalar.h: tests/scalar.lua./tests/scalar.lua

@@ -9,23 +9,25 @@ enum t_state
 };
 int fib(int x);
 
+#include <stdlib.h>
+#define MAX_POINTS 10
 struct t_compount_custom_type
 {
-    int n;
+    size_t n;
     struct
     {
         double x;
         double y;
-    } points[10];
+    } points[MAX_POINTS];
 };
 
 #define TESTS_CUSTOM_COMPOUND_CUSTOM_N (3)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_X (1)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_Y (2)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_2_X (3)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_2_Y (4)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_3_X (5)
-#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_3_Y (6)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_0_X (1)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_0_Y (2)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_X (3)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_1_Y (4)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_2_X (5)
+#define TESTS_CUSTOM_COMPOUND_CUSTOM_POINTS_2_Y (6)
 #define TESTS_CUSTOM_F (fib)
 #define TESTS_CUSTOM_HELLOSTR ("Hello World!")
 #define TESTS_CUSTOM_INITIAL_STATE (INIT)

@@ -1,0 +1,1 @@
+.build/test-lua/custom.asy: tests/custom.lua./tests/custom.lua ./tests/lib/custom_type.lua

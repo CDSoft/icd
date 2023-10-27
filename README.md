@@ -1,18 +1,46 @@
 # Interface Control Document generator
 
-`icd.lua` (Interface Control Document) parses a Lua configuration file
+`icd` (Interface Control Document) parses a Lua configuration file
 and produces source code in various languages.
 
-Note: `icd.lua` is a fork of [lcc](https://gitlab.com/CDSoft/lcc). It adds immutability for a better modularity and reusability.
+Note: `icd` is a fork of [lcc](https://gitlab.com/CDSoft/lcc). It adds immutability for a better modularity and reusability.
+
+# Compilation
+
+`icd` requires [LuaX](https://github.com/CDSoft/luax) and [Ninja](https://ninja-build.org):
+
+``` sh
+$ git clone https://github.com/CDSoft/luax
+$ ninja -C luax install
+```
+
+Once LuaX is installed, `icd` can be compiled and installed with ninja:
+
+``` sh
+$ git clone https://gitlab.com/CDSoft/icd
+$ ninja -C icd install
+```
+
+`icd` and `icd.lua` are installed in `$HOME/.local/bin` by default.
+The installation directory can be changed with the `PREFIX` environment variable:
+
+``` sh
+$ PREFIX="/opt/icd" ninja -C icd install # install icd in /opt/icd/bin/
+```
+
+`icd` is a single autonomous executable containing the LuaX interpreter.
+
+`icd.lua` is a Lua script containing the LuaX libraries implemented in Lua.
+It requires a Lua 5.4 interpreter.
 
 # Usage
 
 ``` sh
-$ icd.lua cfg.lua -o output [-n namespace] -backend_1 ... -backend_n
+$ icd cfg.lua -o output [-n namespace] -backend_1 ... -backend_n
 ```
 
 - executes `cfg.lua`
-- use backends `backend_1`, ..., `backend_n` to convert the Lua value produced by the Lua script,
+- uses backends `backend_1`, ..., `backend_n` to convert the Lua value produced by the Lua script,
 - the (optional) `namespace` is prepended to all variable names by the backends,
 - the actual output name is determined by replacing the extension of `output` by the backend extension.
 
@@ -37,7 +65,7 @@ The configuration script is executed in the global environment (`_G`)
 and shall not produce any side effect.
 This environment only contains standard Lua functions and modules
 since the configuration is a pure Lua script that can be executed
-in any Lua environment (not only by `icd.lua`).
+in any Lua environment (not only by `icd`).
 
 # Code generation customization
 
@@ -104,7 +132,7 @@ Custom types are not subject to type inference. The type is fully defined by the
 
 ## Structures
 
-Structures are Lua tables that contains scalars, structures and arrays.
+Structures are Lua tables that contain scalars, structures and arrays.
 Each field has its own type.
 
 Hybrid Lua tables are not allowed.
@@ -113,7 +141,7 @@ Structures types are `{kind="struct", fields={fieldname=fieldtype}}`.
 
 ## Arrays
 
-Arrays are Lua arrays that contains scalars, structures and arrays.
+Arrays are Lua arrays that contain scalars, structures and arrays.
 All items have the same type.
 
 The types of items are enlarged (size of integers, size of strings, fields of structures, ...)
@@ -165,6 +193,7 @@ The syntax of output files are also checked by several tools:
 |-------------------|-----------------------------------|
 | Asymptote         | `asy`                             |
 | C                 | `clang-tidy`, `clang`, `gcc`      |
-| Haskell           | `stack ghc`                       |
+| Haskell           | `ghc`                             |
 | reStructuredText  | `pandoc`                          |
 | Shell             | `shellcheck`, `bash`, `zsh`       |
+| YAML              | `python`, `yamllint`              |

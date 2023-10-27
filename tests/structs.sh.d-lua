@@ -1,0 +1,1 @@
+.build/test-lua/structs.sh: tests/structs.lua./tests/structs.lua

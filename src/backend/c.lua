@@ -1,7 +1,12 @@
+--@LIB=backend.c
+
 local backend = {}
 
 local parser = require "parser"
 local utils = require "utils"
+
+local F = require "F"
+local fs = require "fs"
 
 local gen_type, gen_struct_type, gen_array_type, gen_custom_type, gen_string_type, gen_ctype
 
@@ -41,8 +46,8 @@ end
 gen_struct_type = function(t, namespace, path, indent)
     local s = indent.."struct "..utils.lower_snake_case("t", namespace, path).."\n"
     s = s..indent.."{\n"
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         local type = gen_type(fieldtype, namespace, path2, indent.."    ")
         if type ~= nil then
             s = s..(type:format(utils.lower_snake_case(fieldname)))..";\n"
@@ -87,7 +92,7 @@ local function depth(x, t)
             d = math.max(d, 1+depth(x[i], t.itemtype))
         end
     elseif t.kind == "struct" then
-        for fieldname, fieldtype in utils.pairs(t.fields) do
+        for fieldname, fieldtype in F.pairs(t.fields) do
             if x[fieldname] ~= nil then
                 d = math.max(d, 1+depth(x[fieldname], fieldtype))
             end
@@ -160,8 +165,8 @@ gen_struct = function(x, t, namespace, path, indent)
     local nl = multiline and "\n" or ""
     local indent2 = multiline and (indent.."    ") or ""
     local s = "{"..nl
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         if x[fieldname] ~= nil then
             local const = gen_const(x[fieldname], fieldtype, namespace, path2, indent2)
             if const ~= nil then
@@ -188,7 +193,7 @@ gen_array = function(x, t, namespace, path, indent)
 end
 
 local function gen_c(output, ast, namespace)
-    local s = "#include \""..utils.basename(output:gsub("%.[^%.]+$", ""))..".h\"\n"
+    local s = "#include \""..fs.basename(output:gsub("%.[^%.]+$", ""))..".h\"\n"
     s = s .. "const struct "..utils.lower_snake_case("t", namespace).." "..utils.upper_snake_case(namespace).." = "
     s = s .. gen_const(ast, ast.__type, namespace)
     s = s .. ";\n"
@@ -204,8 +209,8 @@ end
 
 function backend.compile(output, ast, namespace, params)
     return {
-        {"h", clean(gen_h(ast, namespace, params))},
         {"c", clean(gen_c(output, ast, namespace))},
+        {"h", clean(gen_h(ast, namespace, params))},
     }
 end
 

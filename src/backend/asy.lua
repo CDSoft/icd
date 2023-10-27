@@ -1,7 +1,11 @@
+--@LIB=backend.asy
+
 local backend = {}
 
 local utils = require "utils"
 local parser = require "parser"
+
+local F = require "F"
 
 local gen_type, gen_struct_type, gen_array_type, gen_custom_type
 
@@ -36,8 +40,8 @@ end
 gen_struct_type = function(t, namespace, path)
     local name = utils.lower_snake_case("t", namespace, path)
     local s = "struct "..name.." {\n"
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         local type = gen_type(fieldtype, namespace, path2)
         if type ~= nil then
             s = s.."    "..(type:format(utils.lower_snake_case(fieldname)))..";\n"
@@ -130,9 +134,9 @@ end
 
 gen_struct = function(x, t, namespace, path)
     local s = ""
-    for fieldname, fieldtype in utils.pairs(t.fields) do
+    for fieldname, fieldtype in F.pairs(t.fields) do
         if x[fieldname] ~= nil then
-            local path2 = utils.append(path, fieldname)
+            local path2 = F.concat{path, {fieldname}}
             local const = gen_const(x[fieldname], fieldtype, namespace, path2)
             if const ~= nil then
                 s = s..const
@@ -149,7 +153,7 @@ gen_array = function(x, t, namespace, path)
             local constructor = t.itemtype.asy_type:format("")
             s = s..full_path(namespace, path, i).." = new "..constructor..";\n"
         end
-        local path2 = utils.append(path, i)
+        local path2 = F.concat{path, {i}}
         local const = gen_const(x[i], t.itemtype, namespace, path2)
         s = s..const
     end

@@ -1,7 +1,12 @@
+--@LIB=backend.hs
+
 local backend = {}
 
 local utils = require "utils"
 local parser = require "parser"
+
+local F = require "F"
+local fs = require "fs"
 
 local gen_type, gen_struct_type, gen_array_type, gen_custom_type
 
@@ -31,8 +36,8 @@ gen_struct_type = function(t, namespace, path)
     local name = utils.upper_camel_case(namespace, path)
     local s = "data "..name.." = "..name.."\n"
     local coma = "    {"
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         local type = gen_type(fieldtype, namespace, path2)
         if type ~= nil then
             s = s..(type:format(coma.." "..utils.lower_camel_case(path, fieldname).."'")).."\n"
@@ -53,7 +58,7 @@ end
 local gen_const, gen_struct, gen_array, gen_custom
 
 local function gen_types(output, ast, namespace)
-    local module_name = utils.upper_camel_case(utils.basename(output):gsub("%..*$", ""))
+    local module_name = utils.upper_camel_case((fs.basename(output):splitext()))
     local const_name = utils.lower_camel_case(namespace)
     local s = "module "..module_name.."\nwhere\n"
     s = s .. (parser.prelude(ast, "hs") or "")
@@ -72,7 +77,7 @@ local function depth(x, t)
             d = math.max(d, 1+depth(x[i], t.itemtype))
         end
     elseif t.kind == "struct" then
-        for fieldname, fieldtype in utils.pairs(t.fields) do
+        for fieldname, fieldtype in F.pairs(t.fields) do
             if x[fieldname] ~= nil then
                 d = math.max(d, 1+depth(x[fieldname], fieldtype))
             end
@@ -113,8 +118,8 @@ gen_struct = function(x, t, namespace, path, indent)
     local indent2 = multiline and (indent.."    ") or ""
     local s = name.." "..nl
     local sep = multiline and "{ " or "{"
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         local const = gen_const(x and x[fieldname], fieldtype, namespace, path2, indent2)
         if const ~= nil then
             s = s..indent2..sep..utils.lower_camel_case(path, fieldname).."' = "

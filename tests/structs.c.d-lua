@@ -1,0 +1,1 @@
+.build/test-lua/structs.c .build/test-lua/structs.h: tests/structs.lua./tests/structs.lua

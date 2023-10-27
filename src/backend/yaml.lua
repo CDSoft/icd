@@ -1,6 +1,10 @@
+--@LIB=backend.yaml
+
 local backend = {}
 
 local utils = require "utils"
+
+local F = require "F"
 
 local gen_const, gen_struct, gen_array, gen_custom
 
@@ -29,8 +33,8 @@ gen_struct = function(x, t, namespace, path, indent, indent_first)
     local indent2 = indent.."  "
     local s = indent_first and "\n" or ""
     local indent_next = indent_first
-    for fieldname, fieldtype in utils.pairs(t.fields) do
-        local path2 = utils.append(path, fieldname)
+    for fieldname, fieldtype in F.pairs(t.fields) do
+        local path2 = F.concat{path, {fieldname}}
         if x[fieldname] ~= nil then
             local const = gen_const(x[fieldname], fieldtype, namespace, path2, indent2, true)
             if const ~= nil then

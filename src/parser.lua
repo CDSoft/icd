@@ -2,25 +2,11 @@ local parser = {}
 
 local utils = require "utils"
 
+local F = require "F"
+local fs = require "fs"
+
 -- always sort table keys (variables must always be generated in the same order)
-local pairs = utils.pairs
-
-local lib_dir = utils.dirname(debug.getinfo(1, "S").source:sub(2))
-
-local function get_deps()
-    local deps = {}
-    for name, _ in pairs(package.loaded) do
-        local path = package.searchpath(name, package.path)
-        if path and utils.dirname(path) ~= lib_dir then
-            deps[path] = true
-        end
-    end
-    local dep_list = {}
-    for name, _ in pairs(deps) do
-        table.insert(dep_list, name)
-    end
-    return dep_list
-end
+local pairs = F.pairs
 
 local function is_scalar(t)
     return type(t) == "boolean" or type(t) == "number" or type(t) == "string"
@@ -61,25 +47,27 @@ end
 local pathmt = {__tostring = dump_path}
 
 local function add_path(path, comp)
-    local path2 = utils.append(path, comp)
+    local path2 = F.concat{path, {comp}}
     return setmetatable(path2, pathmt)
 end
 
+--[[
 local function merge(t1, t2)
     t1 = t1 or {}
     for k, v in pairs(t2) do t1[k] = v end
     return t1
 end
+--]]
 
 local function build_custom(x)
     -- A custom typed value is defined in pure Lua script as {__custom=custom_type_def, value}
     -- build_custom adds a type definition in x.__type (as for other builtin types)
     if type(x) == "table" and type(x.__custom) == "table" then
-        rawset(x, "__type", merge(x.__type, { kind = "custom", definitions = x.__custom }))
+        rawset(x, "__type", F.patch(x.__type, { kind = "custom", definitions = x.__custom }))
         x.__custom = true
     end
     if type(x) == "table" and type(x.__ctype) == "string" then
-        rawset(x, "__type", merge(x.__type, { ctype = x.__ctype }))
+        rawset(x, "__type", F.patch(x.__type, { ctype = x.__ctype }))
     end
 end
 
@@ -152,7 +140,7 @@ end
 add_array_type = function(x, path, dim)
     -- all items have the same type
     dim = (dim or 0) + 1
-    rawset(x, "__type", merge(x.__type, {kind="array", size=#x, itemtype=nil, dim=dim}))
+    rawset(x, "__type", F.patch(x.__type, {kind="array", size=#x, itemtype=nil, dim=dim}))
     for i, v in ipairs(x) do
         local path2 = add_path(path, i)
         local itemtype = add_types(v, path2, dim)
@@ -169,7 +157,7 @@ end
 
 add_struct_type = function(x, path)
     -- each field has its own type
-    rawset(x, "__type", merge(x.__type, {kind="struct", fields={}}))
+    rawset(x, "__type", F.patch(x.__type, {kind="struct", fields={}}))
     for k, v in pairs(x) do
         if filter(k, v) then
             local path2 = add_path(path, k)
@@ -191,7 +179,7 @@ function parser.prelude(ast, backend)
         if ast.__prelude and type(ast.__prelude) == "table" and ast.__prelude[backend] then
             table.insert(prelude, ast.__prelude[backend])
         end
-        for k, v in utils.pairs(ast) do
+        for _, v in pairs(ast) do
             local k_prelude = parser.prelude(v, backend)
             if k_prelude then table.insert(prelude, k_prelude) end
         end
@@ -205,7 +193,7 @@ function parser.leaves(x, f, path, t)
     path = path or setmetatable({}, pathmt)
     if type(x) == "table" and x.__type.kind == "array" then
         for i, v in ipairs(x) do
-            local path2 = add_path(path, i)
+            local path2 = add_path(path, i-1)
             parser.leaves(v, f, path2, x.__type.itemtype)
         end
     elseif type(x) == "table" and x.__type.kind == "struct" then
@@ -222,11 +210,13 @@ function parser.leaves(x, f, path, t)
     end
 end
 
-function parser.save_dependencies(depfile, targets)
-    io.open(depfile, "w"):write(("%s: %s\n"):format(
-        table.concat(targets, " "),
-        table.concat(get_deps(), " ")
-    ))
+function parser.save_dependencies(depfile, input, targets)
+    fs.write(depfile, {
+        F.unwords(targets), ": ",
+        input,
+        F.values(package.modpath):unwords(),
+        "\n",
+    })
 end
 
 return parser

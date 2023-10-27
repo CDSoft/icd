@@ -18,12 +18,11 @@ options:
     --cpp-const     generate cpp defined constants (C backend only)
 ]]
 
-local icdpath = arg[0]:gsub("/[^/]*$", "")
-local icdlib = icdpath.."/lib"
-package.path = icdlib.."/?.lua;"..package.path
-
 local utils = require "utils"
 utils.protect(_G) -- protection against some side effects in _G
+
+local F = require "F"
+local fs = require "fs"
 
 -- Command line arguments
 
@@ -66,7 +65,7 @@ while #arg > 0 do
         elseif a == "--cpp-const" then
             params.cpp_const = true
         else
-            table.insert(backends, (require("backend/"..opt)))
+            table.insert(backends, (require("backend."..opt)))
         end
     else
         assert(not input, "duplicate input parameter")
@@ -81,7 +80,7 @@ assert(output, "output not specified")
 
 if #backends == 0 then
     local ext = output:match("%.([^%.]*)$")
-    if ext and #ext > 0 then table.insert(backends, require("backend/"..ext)) end
+    if ext and #ext > 0 then table.insert(backends, (require("backend."..ext))) end
 end
 
 print("input:", input)
@@ -100,14 +99,11 @@ local ast = parser.compile(configuration)
 local outputs = {}
 for _, backend in ipairs(backends) do
     for _, compiled_code in ipairs(backend.compile(output, ast, namespace, params)) do
-        local ext = compiled_code[1]
-        local code = compiled_code[2]
-        local filename = output:gsub("%.[^%.]+$", "").."."..ext
+        local ext, code = F.unpack(compiled_code)
+        local filename = output:splitext().."."..ext
         table.insert(outputs, filename)
         print("output:", filename)
-        local f = assert(io.open(filename, "w"))
-        assert(f:write(code))
-        f:close()
+        assert(fs.write(filename, code))
         if filename:match("%.[ch]$") then
             os.execute("clang-format -i -style=Microsoft "..filename)
         end
@@ -117,5 +113,5 @@ end
 -- Save dependencies
 
 if depfile then
-    parser.save_dependencies(depfile, outputs)
+    parser.save_dependencies(depfile, input, outputs)
 end

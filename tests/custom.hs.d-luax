@@ -1,0 +1,1 @@
+.build/test-luax/custom.hs: tests/custom.lua./tests/custom.lua ./tests/lib/custom_type.lua
