@@ -1,4 +1,8 @@
 local F = require "F"
+local sys = require "sys"
+
+help.name "ICD"
+help.description "Interface Control Document generator"
 
 var "builddir" ".build"
 
@@ -13,6 +17,7 @@ local clang_tidy = {
         "-altera-struct-pack-align",
         "-readability-identifier-length",
         "-modernize-macro-to-enum",
+        "-misc-include-cleaner",
     }:str",",
     "-warnings-as-errors=*",
     "-quiet",
@@ -24,13 +29,13 @@ local shellcheck = {
 
 local sources = ls "src/**.lua"
 
-default {
-    build "$builddir/icd"     { sources, command = "luax -q -o $out $in" },
+local binaries = {
+    build("$builddir/icd"..sys.build.exe) { sources, command = "luaxc -q -o $out $in" },
     build "$builddir/icd.lua" { sources, command = "luax -q -t lua -o $out $in" },
 }
 
-install "bin" "$builddir/icd"
-install "bin" "$builddir/icd.lua"
+default(binaries)
+install "bin" { binaries }
 
 rule "icd" {
     command = {
@@ -126,7 +131,7 @@ ls "tests/*.lua"
             },
             F"sh rst hs asy yaml":words():map(function(ext)
                 return build { out.."."..ext } { "icd", test,
-                    icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or ""),
+                    icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.build.exe),
                     implicit_out = {
                         out.."."..ext..".d",
                     },
