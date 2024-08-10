@@ -30,30 +30,24 @@ local shellcheck = {
 local sources = ls "src/**.lua"
 
 local binaries = {
-    build("$builddir/icd"..sys.build.exe) { sources, command = "luaxc -q -o $out $in" },
-    build "$builddir/icd.lua" { sources, command = "luax -q -t lua -o $out $in" },
+    build.luax.native("$builddir/icd"..sys.exe) { sources, arg="-q" },
+    build.luax.lua "$builddir/icd.lua" { sources, arg="-q" },
 }
 
 default(binaries)
 install "bin" { binaries }
 
 rule "icd" {
-    command = {
-        "$icd $in -o $out",
-        "-M $depfile",
-        "$args",
-    },
+    command = "$icd $in -o $out -M $depfile $args",
     depfile = "$out.d",
-    implicit_in = {
-        "$icd",
-    },
+    implicit_in = { "$icd" },
 }
 
 rule "check_c" {
     command = {
         "gcc -fsyntax-only $in",
         "&& clang -fsyntax-only $in",
-        "&& clang -c $in -o $out.o && ", clang_tidy, "$in", "--", "$in",
+        "&& clang -c $in -o $out.o &&", clang_tidy, "$in", "--", "$in",
         "&& touch $out",
     },
 }
@@ -116,7 +110,7 @@ ls "tests/*.lua"
 
             build { out..".c" } { "icd", test,
                 args = { "--cpp-const" },
-                icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or ""),
+                icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.exe),
                 implicit_out = {
                     out..".h",
                     out..".c.d",
@@ -131,7 +125,7 @@ ls "tests/*.lua"
             },
             F"sh rst hs asy yaml":words():map(function(ext)
                 return build { out.."."..ext } { "icd", test,
-                    icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.build.exe),
+                    icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.exe),
                     implicit_out = {
                         out.."."..ext..".d",
                     },
