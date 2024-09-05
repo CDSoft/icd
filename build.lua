@@ -30,8 +30,8 @@ local shellcheck = {
 local sources = ls "src/**.lua"
 
 local binaries = {
-    build.luax.native("$builddir/icd"..sys.exe) { sources, arg="-q" },
-    build.luax.lua "$builddir/icd.lua" { sources, arg="-q" },
+    build.luax.native("$builddir/icd"..sys.exe) { sources, flags="-q" },
+    build.luax.lua "$builddir/icd.lua" { sources, flags="-q" },
 }
 
 default(binaries)

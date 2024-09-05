@@ -1,1 +1,1 @@
-.build/test-lua/custom.rst: tests/custom.lua./tests/custom.lua ./tests/lib/custom_type.lua
+.build/test-lua/custom.rst: tests/custom.lua ./tests/custom.lua ./tests/lib/custom_type.lua

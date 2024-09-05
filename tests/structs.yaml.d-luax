@@ -1,1 +1,1 @@
-.build/test-luax/structs.yaml: tests/structs.lua./tests/structs.lua
+.build/test-luax/structs.yaml: tests/structs.lua ./tests/structs.lua

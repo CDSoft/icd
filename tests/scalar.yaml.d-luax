@@ -1,1 +1,1 @@
-.build/test-luax/scalar.yaml: tests/scalar.lua./tests/scalar.lua
+.build/test-luax/scalar.yaml: tests/scalar.lua ./tests/scalar.lua

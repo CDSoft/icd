@@ -213,8 +213,7 @@ end
 function parser.save_dependencies(depfile, input, targets)
     fs.write(depfile, {
         F.unwords(targets), ": ",
-        input,
-        F.values(package.modpath):unwords(),
+        F.flatten { input, F.values(package.modpath) } : unwords(),
         "\n",
     })
 end

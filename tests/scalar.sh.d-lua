@@ -1,1 +1,1 @@
-.build/test-lua/scalar.sh: tests/scalar.lua./tests/scalar.lua
+.build/test-lua/scalar.sh: tests/scalar.lua ./tests/scalar.lua

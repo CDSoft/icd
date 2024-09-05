@@ -21,12 +21,14 @@ rule luax-native
   command = luax compile -t native $in -o $out
 
 build $builddir/icd: luax-native src/backend/asy.lua src/backend/c.lua src/backend/hs.lua src/backend/rst.lua src/backend/sh.lua src/backend/yaml.lua src/icd.lua src/parser.lua src/utils.lua
+  flags = -q
 
 rule luax-lua
   description = luax-lua $out
   command = luax compile -t lua $in -o $out
 
 build $builddir/icd.lua: luax-lua src/backend/asy.lua src/backend/c.lua src/backend/hs.lua src/backend/rst.lua src/backend/sh.lua src/backend/yaml.lua src/icd.lua src/parser.lua src/utils.lua
+  flags = -q
 
 default $builddir/icd $builddir/icd.lua
 

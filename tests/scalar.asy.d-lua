@@ -1,1 +1,1 @@
-.build/test-lua/scalar.asy: tests/scalar.lua./tests/scalar.lua
+.build/test-lua/scalar.asy: tests/scalar.lua ./tests/scalar.lua

@@ -1,1 +1,1 @@
-.build/test-luax/import.c .build/test-luax/import.h: tests/import.lua./tests/import.lua ./tests/lib/lib.lua
+.build/test-luax/import.c .build/test-luax/import.h: tests/import.lua ./tests/import.lua ./tests/lib/lib.lua

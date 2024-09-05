@@ -1,1 +1,1 @@
-.build/test-lua/import.rst: tests/import.lua./tests/import.lua ./tests/lib/lib.lua
+.build/test-lua/import.rst: tests/import.lua ./tests/import.lua ./tests/lib/lib.lua

@@ -1,1 +1,1 @@
-.build/test-luax/custom.yaml: tests/custom.lua./tests/custom.lua ./tests/lib/custom_type.lua
+.build/test-luax/custom.yaml: tests/custom.lua ./tests/custom.lua ./tests/lib/custom_type.lua

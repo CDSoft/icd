@@ -1,1 +1,1 @@
-.build/test-luax/structs.asy: tests/structs.lua./tests/structs.lua
+.build/test-luax/structs.asy: tests/structs.lua ./tests/structs.lua

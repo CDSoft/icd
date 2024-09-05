@@ -1,1 +1,1 @@
-.build/test-luax/structs.c .build/test-luax/structs.h: tests/structs.lua./tests/structs.lua
+.build/test-luax/structs.c .build/test-luax/structs.h: tests/structs.lua ./tests/structs.lua
