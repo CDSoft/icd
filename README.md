@@ -185,7 +185,7 @@ The Shell backend produces `output.sh`. It contains scalar parameters.
 # Examples and tests
 
 The `tests` directory contains Lua configuration test scripts.
-`make tests` will execute these tests and compare the script outputs to the expected outputs.
+`ninja` executes these tests and compares the script outputs to the expected outputs.
 
 The syntax of output files are also checked by several tools:
 
