@@ -49,13 +49,20 @@ local shellcheck = {
 
 local sources = ls "src/**.lua"
 
+build.luax.add_global "flags" "-q"
+
 local binaries = {
-    build.luax.native("$builddir/icd"..sys.exe) { sources, flags="-q" },
-    build.luax.lua "$builddir/icd.lua" { sources, flags="-q" },
+    build.luax.native("$builddir/icd"..sys.exe) { sources },
+    build.luax.lua "$builddir/icd.lua" { sources },
 }
 
 default(binaries)
 install "bin" { binaries }
+
+require "build-release" {
+    name = "icd",
+    sources = sources,
+}
 
 rule "icd" {
     command = "$icd $in -o $out -M $depfile $args",
