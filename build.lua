@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with icd.  If not, see <https://www.gnu.org/licenses/>.
 
 For further information about icd you can visit
-http://gitlab.com/CDSoft/icd
+http://github.com/CDSoft/icd
 ]]
 
 local F = require "F"
@@ -52,7 +52,7 @@ local sources = ls "src/**.lua"
 build.luax.add_global "flags" "-q"
 
 local binaries = {
-    build.luax.native("$builddir/icd"..sys.exe) { sources },
+    build.luax.native "$builddir/icd" { sources },
     build.luax.lua "$builddir/icd.lua" { sources },
 }
 

@@ -17,7 +17,7 @@ $ ninja -C luax install
 Once LuaX is installed, `icd` can be compiled and installed with ninja:
 
 ``` sh
-$ git clone https://gitlab.com/CDSoft/icd
+$ git clone https://github.com/CDSoft/icd
 $ ninja -C icd install
 ```
 
@@ -217,5 +217,5 @@ You should have received a copy of the GNU General Public License
 along with icd.  If not, see <https://www.gnu.org/licenses/>.
 
 For further information about icd you can visit
-http://gitlab.com/CDSoft/icd
+http://github.com/CDSoft/icd
 ```

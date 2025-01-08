@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with icd.  If not, see <https://www.gnu.org/licenses/>.
 
 For further information about icd you can visit
-http://gitlab.com/CDSoft/icd
+http://github.com/CDSoft/icd
 ]]
 
 --@LIB=backend.c
