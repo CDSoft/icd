@@ -19,6 +19,7 @@ http://github.com/CDSoft/icd
 ]]
 
 local F = require "F"
+local sh = require "sh"
 local sys = require "sys"
 
 help.name "ICD"
@@ -27,6 +28,9 @@ help.description "Interface Control Document generator"
 var "builddir" ".build"
 
 clean "$builddir"
+
+var "git_version" { sh "git describe --tags" }
+generator { implicit_in = ".git/refs/tags" }
 
 local clang_tidy = {
     "clang-tidy",
@@ -59,9 +63,19 @@ local binaries = {
 default(binaries)
 install "bin" { binaries }
 
-require "build-release" {
-    name = "icd",
-    sources = sources,
+phony "release" {
+    build.tar "$builddir/release/${git_version}/icd-${git_version}-lua.tar.gz" {
+        base = "$builddir/release/.build",
+        name = "icd-${git_version}-lua",
+        build.luax.lua("$builddir/release/.build/icd-${git_version}-lua/bin/icd.lua") { sources },
+    },
+    require "targets" : map(function(target)
+        return build.tar("$builddir/release/${git_version}/icd-${git_version}-"..target.name..".tar.gz") {
+            base = "$builddir/release/.build",
+            name = "icd-${git_version}-"..target.name,
+            build.luax[target.name]("$builddir/release/.build/icd-${git_version}-"..target.name/"bin/icd") { sources },
+        }
+    end),
 }
 
 rule "icd" {
