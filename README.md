@@ -5,6 +5,27 @@ and produces source code in various languages.
 
 Note: `icd` is a fork of [lcc](https://gitlab.com/CDSoft/lcc). It adds immutability for a better modularity and reusability.
 
+# Pricing
+
+ICD is a free and open source software.
+But it has a cost. It takes time to develop, maintain and support.
+
+To help ICD remain free, open source and supported,
+users are cordially invited to contribute financially to its development.
+
+| ICD price          | Europe        | United States | Rest of the World |
+| ------------------ | ------------- | ------------- | ----------------- |
+| Personal usage     | Free donation | Free donation | Free donation     |
+| Academic usage     | €10 or more   | $20 or more   | $15 or more       |
+| Professional usage | €20 or more   | $40 or more   | $25 or more       |
+
+These prices are per month and per tools (see [`PRICING`](PRICING)).
+
+- donate with Liberapay: <https://liberapay.com/LuaX/donate>
+- donate with GitHub Sponsor: <https://github.com/sponsors/CDSoft>
+
+Feel free to promote ICD!
+
 # Compilation
 
 `icd` requires [LuaX](https://github.com/CDSoft/luax) and [Ninja](https://ninja-build.org):
