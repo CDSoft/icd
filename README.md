@@ -28,17 +28,31 @@ Feel free to promote ICD!
 
 # Compilation
 
-`icd` requires [LuaX](https://github.com/CDSoft/luax) and [Ninja](https://ninja-build.org):
+`icd` requires [LuaX](https://github.com/CDSoft/luax),
+[Bang](https://github.com/CDSoft/bang) and [Ninja](https://ninja-build.org):
 
 ``` sh
 $ git clone https://github.com/CDSoft/luax
-$ ninja -C luax install
+$ cd luax
+$ ./bootstrap.sh
+$ ninja install
 ```
 
-Once LuaX is installed, `icd` can be compiled and installed with ninja:
+Once LuaX is installed, `bang` can be compiled and installed with ninja:
+
+``` sh
+$ git clone https://github.com/CDSoft/bang
+$ cd bang
+$ ./boot.lua
+$ ninja install
+```
+
+`icd` can finally be compiled and installed:
 
 ``` sh
 $ git clone https://github.com/CDSoft/icd
+$ cd icd
+$ bang
 $ ninja -C icd install
 ```
 
