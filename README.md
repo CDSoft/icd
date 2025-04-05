@@ -21,18 +21,18 @@ users are cordially invited to contribute financially to its development.
 
 These prices are per month and per tools (see [`PRICING`](PRICING)).
 
-- donate with Liberapay: <https://liberapay.com/LuaX/donate>
-- donate with GitHub Sponsor: <https://github.com/sponsors/CDSoft>
+<a href='https://liberapay.com/LuaX/donate' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://liberapay.com/assets/widgets/donate.svg' border='0' alt='Donate using Liberapay' /></a>
+<a href='https://ko-fi.com/K3K11CD108' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 Feel free to promote ICD!
 
 # Compilation
 
-`icd` requires [LuaX](https://github.com/CDSoft/luax),
-[Bang](https://github.com/CDSoft/bang) and [Ninja](https://ninja-build.org):
+`icd` requires [LuaX](https://codeberg.org/cdsoft/luax),
+[Bang](https://codeberg.org/cdsoft/bang) and [Ninja](https://ninja-build.org):
 
 ``` sh
-$ git clone https://github.com/CDSoft/luax
+$ git clone https://codeberg.org/cdsoft/luax
 $ cd luax
 $ ./bootstrap.sh
 $ ninja install
@@ -41,7 +41,7 @@ $ ninja install
 Once LuaX is installed, `bang` can be compiled and installed with ninja:
 
 ``` sh
-$ git clone https://github.com/CDSoft/bang
+$ git clone https://codeberg.org/cdsoft/bang
 $ cd bang
 $ ./boot.lua
 $ ninja install
@@ -50,7 +50,7 @@ $ ninja install
 `icd` can finally be compiled and installed:
 
 ``` sh
-$ git clone https://github.com/CDSoft/icd
+$ git clone https://codeberg.org/cdsoft/icd
 $ cd icd
 $ bang
 $ ninja -C icd install
@@ -252,5 +252,5 @@ You should have received a copy of the GNU General Public License
 along with icd.  If not, see <https://www.gnu.org/licenses/>.
 
 For further information about icd you can visit
-http://github.com/CDSoft/icd
+http://codeberg.org/cdsoft/icd
 ```
