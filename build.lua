@@ -19,8 +19,9 @@ http://codeberg.org/cdsoft/icd
 ]]
 
 local F = require "F"
-local sh = require "sh"
 local sys = require "sys"
+
+version "0.3.3"
 
 help.name "ICD"
 help.description "Interface Control Document generator"
@@ -28,9 +29,6 @@ help.description "Interface Control Document generator"
 var "builddir" ".build"
 
 clean "$builddir"
-
-var "git_version" { sh "git describe --tags" }
-generator { implicit_in = ".git/refs/tags" }
 
 local clang_tidy = {
     "clang-tidy",
@@ -64,16 +62,16 @@ default(binaries)
 install "bin" { binaries }
 
 phony "release" {
-    build.tar "$builddir/release/${git_version}/icd-${git_version}-lua.tar.gz" {
+    build.tar "$builddir/release/${version}/icd-${version}-lua.tar.gz" {
         base = "$builddir/release/.build",
-        name = "icd-${git_version}-lua",
-        build.luax.lua("$builddir/release/.build/icd-${git_version}-lua/bin/icd.lua") { sources },
+        name = "icd-${version}-lua",
+        build.luax.lua("$builddir/release/.build/icd-${version}-lua/bin/icd.lua") { sources },
     },
     require "targets" : map(function(target)
-        return build.tar("$builddir/release/${git_version}/icd-${git_version}-"..target.name..".tar.gz") {
+        return build.tar("$builddir/release/${version}/icd-${version}-"..target.name..".tar.gz") {
             base = "$builddir/release/.build",
-            name = "icd-${git_version}-"..target.name,
-            build.luax[target.name]("$builddir/release/.build/icd-${git_version}-"..target.name/"bin/icd") { sources },
+            name = "icd-${version}-"..target.name,
+            build.luax[target.name]("$builddir/release/.build/icd-${version}-"..target.name/"bin/icd") { sources },
         }
     end),
 }
