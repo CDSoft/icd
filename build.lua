@@ -21,12 +21,10 @@ http://codeberg.org/cdsoft/icd
 local F = require "F"
 local sys = require "sys"
 
-version "0.3.3"
+version "0.4"
 
 help.name "ICD"
 help.description "Interface Control Document generator"
-
-var "builddir" ".build"
 
 clean "$builddir"
 
@@ -49,7 +47,10 @@ local shellcheck = {
     "shellcheck",
 }
 
-local sources = ls "src/**.lua"
+local sources = {
+    ls "src/**.lua",
+    file "$builddir/icd-version" { vars.version },
+}
 
 build.luax.add_global "flags" "-q"
 
