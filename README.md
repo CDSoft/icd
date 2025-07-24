@@ -1,19 +1,20 @@
-# Interface Control Document generator
+# Lua Data Compiler
 
-`icd` (Interface Control Document) parses a Lua configuration file
+`ldc` (Lua Data Compiler) parses a Lua script
 and produces source code in various languages.
 
-Note: `icd` is a fork of [lcc](https://gitlab.com/CDSoft/lcc). It adds immutability for a better modularity and reusability.
+Note: `ldc` is a fork of [lcc](https://gitlab.com/CDSoft/lcc).
+It adds immutability for a better modularity and reusability.
 
 # Pricing
 
-ICD is a free and open source software.
+LDC is a free and open source software.
 But it has a cost. It takes time to develop, maintain and support.
 
-To help ICD remain free, open source and supported,
+To help LDC remain free, open source and supported,
 users are cordially invited to contribute financially to its development.
 
-| ICD price          | Europe        | United States | Rest of the World |
+| LDC price          | Europe        | United States | Rest of the World |
 | ------------------ | ------------- | ------------- | ----------------- |
 | Personal usage     | Free donation | Free donation | Free donation     |
 | Academic usage     | €10 or more   | $20 or more   | $15 or more       |
@@ -24,11 +25,11 @@ These prices are per month and per tools (see [`PRICING`](PRICING)).
 <a href='https://liberapay.com/LuaX/donate' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://liberapay.com/assets/widgets/donate.svg' border='0' alt='Donate using Liberapay' /></a>
 <a href='https://ko-fi.com/K3K11CD108' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-Feel free to promote ICD!
+Feel free to promote LDC!
 
 # Compilation
 
-`icd` requires [LuaX](https://codeberg.org/cdsoft/luax),
+`ldc` requires [LuaX](https://codeberg.org/cdsoft/luax),
 [Bang](https://codeberg.org/cdsoft/bang) and [Ninja](https://ninja-build.org):
 
 ``` sh
@@ -47,31 +48,31 @@ $ ./boot.lua
 $ ninja install
 ```
 
-`icd` can finally be compiled and installed:
+`ldc` can finally be compiled and installed:
 
 ``` sh
-$ git clone https://codeberg.org/cdsoft/icd
-$ cd icd
+$ git clone https://codeberg.org/cdsoft/ldc
+$ cd ldc
 $ bang
-$ ninja -C icd install
+$ ninja -C ldc install
 ```
 
-`icd` and `icd.lua` are installed in `$HOME/.local/bin` by default.
+`ldc` and `ldc.lua` are installed in `$HOME/.local/bin` by default.
 The installation directory can be changed with the `PREFIX` environment variable:
 
 ``` sh
-$ PREFIX="/opt/icd" ninja -C icd install # install icd in /opt/icd/bin/
+$ PREFIX="/opt/ldc" ninja -C ldc install # install ldc in /opt/ldc/bin/
 ```
 
-`icd` is a single autonomous executable containing the LuaX interpreter.
+`ldc` is a single autonomous executable containing the LuaX interpreter.
 
-`icd.lua` is a Lua script containing the LuaX libraries implemented in Lua.
+`ldc.lua` is a Lua script containing the LuaX libraries implemented in Lua.
 It requires a Lua 5.4 interpreter.
 
 # Usage
 
 ``` sh
-$ icd cfg.lua -o output [-n namespace] -backend_1 ... -backend_n
+$ ldc cfg.lua -o output [-n namespace] -backend_1 ... -backend_n
 ```
 
 - executes `cfg.lua`
@@ -80,7 +81,7 @@ $ icd cfg.lua -o output [-n namespace] -backend_1 ... -backend_n
 - the actual output name is determined by replacing the extension of `output` by the backend extension.
 
 ``` sh
-$ icd.lua cfg.lua -o output.ext [-n namespace]
+$ ldc.lua cfg.lua -o output.ext [-n namespace]
 ```
 
 - does the same as above but the backend is determined by the extension of `output.ext`.
@@ -100,7 +101,7 @@ The configuration script is executed in the global environment (`_G`)
 and shall not produce any side effect.
 This environment only contains standard Lua functions and modules
 since the configuration is a pure Lua script that can be executed
-in any Lua environment (not only by `icd`).
+in any Lua environment (not only by `ldc`).
 
 # Code generation customization
 
@@ -236,21 +237,21 @@ The syntax of output files are also checked by several tools:
 # License
 
 ```
-This file is part of icd.
+This file is part of ldc.
 
-icd is free software: you can redistribute it and/or modify
+ldc is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-icd is distributed in the hope that it will be useful,
+ldc is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with icd.  If not, see <https://www.gnu.org/licenses/>.
+along with ldc.  If not, see <https://www.gnu.org/licenses/>.
 
-For further information about icd you can visit
-http://codeberg.org/cdsoft/icd
+For further information about ldc you can visit
+http://codeberg.org/cdsoft/ldc
 ```

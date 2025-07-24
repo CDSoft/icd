@@ -1,4 +1,4 @@
-                              ICD PRICING
+                              LDC PRICING
                       Version 1, 22 February 2025
 
  Copyright (C) 2025 Christophe Delord <https://cdelord.fr>
@@ -7,11 +7,11 @@
 
                                 Preamble
 
-  ICD is distributed on the GNU General Public License. It's a free and
+  LDC is distributed on the GNU General Public License. It's a free and
 open source software. But it does not mean it does not have a cost. It
 takes time to develop, maintain and support.
 
-  To help ICD remain free, open source and supported, users are
+  To help LDC remain free, open source and supported, users are
 cordially invited to contribute financially to its development.
 
                           TERMS AND CONDITIONS
@@ -21,10 +21,10 @@ cordially invited to contribute financially to its development.
   "LuaX" refers to LuaX or any LuaX based software available on
 https://codeberg.org/cdsoft
 
-  "ICD" is a LuaX based software available on
-https://codeberg.org/cdsoft/icd
+  "LDC" is a LuaX based software available on
+https://codeberg.org/cdsoft/ldc
 
-  "Usage" means the usage of "ICD" in a personal, academic or
+  "Usage" means the usage of "LDC" in a personal, academic or
 professional context.
 
   A "personal usage" is a usage by one person for personal projects or
@@ -37,34 +37,34 @@ infrastructure provided by schools or universities.
 
   1. Basic Permissions.
 
-  ICD is distributed under the GNU General Public License. It's a free
+  LDC is distributed under the GNU General Public License. It's a free
 and open source software. See the LICENSE file for further information.
 
   2. Personal usage.
 
-  The personal usage of ICD is free. Personal users can donate any
+  The personal usage of LDC is free. Personal users can donate any
 amount of money, once or every month.
 
   3. Academic usage.
 
-  Academic usage of ICD cost €10 in Europe or $15 in the rest of the
+  Academic usage of LDC cost €10 in Europe or $15 in the rest of the
 world (except from the United States) per month and per LuaX tool. This
 is a minimal price. Higher donations are appreciated.
 
   4. Academic usage in the United States.
 
-  Academic usage of ICD cost $20 in the United States per month and per
+  Academic usage of LDC cost $20 in the United States per month and per
 LuaX tool. This is a minimal price. Higher donations are appreciated.
 
   5. Professional usage.
 
-  Professional usage of ICD cost €20 in Europe or $25 in the rest of
+  Professional usage of LDC cost €20 in Europe or $25 in the rest of
 the world (except from the United States) per month and per LuaX tool.
 This is a minimal price. Higher donations are appreciated.
 
   6. Professional usage in the United States.
 
-  Professional usage of ICD cost $40 in the United States per month and
+  Professional usage of LDC cost $40 in the United States per month and
 per LuaX tool. This is a minimal price. Higher donations are
 appreciated.
 

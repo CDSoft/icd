@@ -1,21 +1,21 @@
 --[[
-This file is part of icd.
+This file is part of ldc.
 
-icd is free software: you can redistribute it and/or modify
+ldc is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-icd is distributed in the hope that it will be useful,
+ldc is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with icd.  If not, see <https://www.gnu.org/licenses/>.
+along with ldc.  If not, see <https://www.gnu.org/licenses/>.
 
-For further information about icd you can visit
-http://codeberg.org/cdsoft/icd
+For further information about ldc you can visit
+http://codeberg.org/cdsoft/ldc
 ]]
 
 local utils = require "utils"
@@ -24,17 +24,17 @@ utils.protect(_G) -- protection against some side effects in _G
 local F = require "F"
 local fs = require "fs"
 
-local version = require "icd-version"
+local version = require "ldc-version"
 
 -- Command line arguments
 
 local args = (function()
     local parser = require "argparse"()
-        : name "ICD"
-        : description "Interface Control Document generator"
-        : epilog "For more information, see https://codeberg.org/cdsoft/icd"
+        : name "LDC"
+        : description "Lua Data Compiler"
+        : epilog "For more information, see https://codeberg.org/cdsoft/ldc"
     parser : flag "-v"
-        : description(('Print ICD version ("%s")'):format(version))
+        : description(('Print LDC version ("%s")'):format(version))
         : action(function() print(version); os.exit() end)
     parser : argument "input"
         : description "input Lua script"
@@ -69,7 +69,7 @@ local args = (function()
     return parser:parse(arg)
 end)()
 
-print "Interface Control Document generator"
+print "Lua Data Compiler"
 
 F.foreach(args.import_dir, function(path)
     package.path = path.."/?.lua;"..package.path

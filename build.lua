@@ -1,30 +1,30 @@
 section [[
-This file is part of icd.
+This file is part of ldc.
 
-icd is free software: you can redistribute it and/or modify
+ldc is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-icd is distributed in the hope that it will be useful,
+ldc is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with icd.  If not, see <https://www.gnu.org/licenses/>.
+along with ldc.  If not, see <https://www.gnu.org/licenses/>.
 
-For further information about icd you can visit
-http://codeberg.org/cdsoft/icd
+For further information about ldc you can visit
+http://codeberg.org/cdsoft/ldc
 ]]
 
 local F = require "F"
 local sys = require "sys"
 
-version "0.4"
+version "1.0"
 
-help.name "ICD"
-help.description "Interface Control Document generator"
+help.name "LDC"
+help.description "Lua Data Compiler"
 
 clean "$builddir"
 
@@ -49,38 +49,38 @@ local shellcheck = {
 
 local sources = {
     ls "src/**.lua",
-    file "$builddir/icd-version" { vars.version },
+    file "$builddir/ldc-version" { vars.version },
 }
 
 build.luax.add_global "flags" "-q"
 
 local binaries = {
-    build.luax.native "$builddir/icd" { sources },
-    build.luax.lua "$builddir/icd.lua" { sources },
+    build.luax.native "$builddir/ldc" { sources },
+    build.luax.lua "$builddir/ldc.lua" { sources },
 }
 
 default(binaries)
 install "bin" { binaries }
 
 phony "release" {
-    build.tar "$builddir/release/${version}/icd-${version}-lua.tar.gz" {
+    build.tar "$builddir/release/${version}/ldc-${version}-lua.tar.gz" {
         base = "$builddir/release/.build",
-        name = "icd-${version}-lua",
-        build.luax.lua("$builddir/release/.build/icd-${version}-lua/bin/icd.lua") { sources },
+        name = "ldc-${version}-lua",
+        build.luax.lua("$builddir/release/.build/ldc-${version}-lua/bin/ldc.lua") { sources },
     },
     require "targets" : map(function(target)
-        return build.tar("$builddir/release/${version}/icd-${version}-"..target.name..".tar.gz") {
+        return build.tar("$builddir/release/${version}/ldc-${version}-"..target.name..".tar.gz") {
             base = "$builddir/release/.build",
-            name = "icd-${version}-"..target.name,
-            build.luax[target.name]("$builddir/release/.build/icd-${version}-"..target.name/"bin/icd") { sources },
+            name = "ldc-${version}-"..target.name,
+            build.luax[target.name]("$builddir/release/.build/ldc-${version}-"..target.name/"bin/ldc") { sources },
         }
     end),
 }
 
-rule "icd" {
-    command = "$icd $in -o $out -M $depfile $args",
+rule "ldc" {
+    command = "$ldc $in -o $out -M $depfile $args",
     depfile = "$out.d",
-    implicit_in = { "$icd" },
+    implicit_in = { "$ldc" },
 }
 
 rule "check_c" {
@@ -148,9 +148,9 @@ ls "tests/*.lua"
 
         default {
 
-            build { out..".c" } { "icd", test,
+            build { out..".c" } { "ldc", test,
                 args = { "--cpp-const" },
-                icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.exe),
+                ldc = "$builddir/ldc"..(interpreter=="lua" and ".lua" or sys.exe),
                 implicit_out = {
                     out..".h",
                     out..".c.d",
@@ -164,8 +164,8 @@ ls "tests/*.lua"
                 },
             },
             F"sh rst hs asy yaml":words():map(function(ext)
-                return build { out.."."..ext } { "icd", test,
-                    icd = "$builddir/icd"..(interpreter=="lua" and ".lua" or sys.exe),
+                return build { out.."."..ext } { "ldc", test,
+                    ldc = "$builddir/ldc"..(interpreter=="lua" and ".lua" or sys.exe),
                     implicit_out = {
                         out.."."..ext..".d",
                     },
